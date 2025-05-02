@@ -1,0 +1,336 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #2c3e50;
+    background-color: #f4f6f8;
+  }
+  
+  /* Header Styles */
+  header {
+    background: linear-gradient(90deg, #4285f4, #3b7dd8);
+    color: white;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  #site-title {
+    font-size: 2.8rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  #tagline {
+    font-size: 1.1rem;
+    font-style: italic;
+    opacity: 0.9;
+  }
+  
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-top: 1rem;
+  }
+  
+  nav ul li {
+    margin: 0 1rem;
+  }
+  
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  nav ul li a:hover,
+  nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  /* Main Content Styles */
+  main {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+  }
+  
+  section {
+    margin-bottom: 3rem;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+  }
+  
+  section:hover {
+    transform: translateY(-4px);
+  }
+  
+  section h2 {
+    color: #3367d6;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+  }
+  
+  /* Products Grid */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.75rem;
+  }
+  
+  .product-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .product-info {
+    padding: 1rem;
+  }
+  
+  .product-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-price {
+    font-weight: bold;
+    color: #3367d6;
+    margin-bottom: 1rem;
+  }
+  
+  .add-to-cart {
+    background-color: #3367d6;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    font-weight: 500;
+  }
+  
+  .add-to-cart:hover {
+    background-color: #2851a3;
+  }
+  
+  /* Cart Styles */
+  #cart-items {
+    margin-bottom: 1.5rem;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 1rem;
+    border-radius: 6px;
+  }
+  
+  .cart-item-details h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .cart-item-price {
+    color: #3367d6;
+    font-weight: 500;
+  }
+  
+  .quantity-btn {
+    background-color: #f1f3f4;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .quantity-btn:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .remove-item {
+    color: #d93025;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .remove-item:hover {
+    color: #b71c1c;
+  }
+  
+  #cart-summary {
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  
+  .total {
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #dcdcdc;
+  }
+  
+  #checkout-btn {
+    background-color: #3367d6;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 6px;
+    width: 100%;
+    margin-top: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  #checkout-btn:hover:not([disabled]) {
+    background-color: #26499c;
+  }
+  
+  #checkout-btn[disabled] {
+    background-color: #bbb;
+    cursor: not-allowed;
+  }
+  
+  /* Calculator Styles */
+  .calculator-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .form-group input {
+    padding: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  #calculate-btn {
+    background-color: #3367d6;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s;
+  }
+  
+  #calculate-btn:hover {
+    background-color: #2851a3;
+  }
+  
+  #calculation-result {
+    background-color: #f1f5f9;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  /* Score Display */
+  #score-display {
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem 0;
+    color: #3367d6;
+  }
+  
+  .challenge-passed {
+    background-color: #d4f2e7;
+    color: #137333;
+  }
+  
+  .challenge-failed {
+    background-color: #fcd8d5;
+    color: #c5221f;
+  }
+  
+  /* Footer */
+  footer {
+    background: #3367d6;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    font-size: 0.95rem;
+  }
+  
