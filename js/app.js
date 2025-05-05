@@ -173,15 +173,21 @@ function updateCartTotals() {
     // - subtotalAmount.textContent
     // - taxAmount.textContent
     // - totalAmount.textContent
-}
-
-// Calculate discount
-function calculateDiscount() {
-    // TODO: Challenge #3 - Implement discount calculator
-    // This function should calculate the discounted price and savings amount
-    // Update the following elements:
-    // - finalPrice.textContent
-    // - savingsAmount.textContent
+    
+    // Challenge #2 Solution:
+    // Calculate the subtotal by summing up (item price * item quantity) for all items
+    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    
+    // Calculate tax based on the subtotal and the TAX_RATE (10%)
+    const tax = subtotal * TAX_RATE;
+    
+    // Calculate total by adding subtotal and tax
+    const total = subtotal + tax;
+    
+    // Update the display elements with formatted currency values
+    subtotalAmount.textContent = `$${subtotal.toFixed(2)}`;
+    taxAmount.textContent = `$${tax.toFixed(2)}`;
+    totalAmount.textContent = `$${total.toFixed(2)}`;
 }
 
 // Initialize the app when the DOM is fully loaded
