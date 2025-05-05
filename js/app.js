@@ -3,30 +3,32 @@ let cart = [];
 const TAX_RATE = 0.10;
 
 // DOM Elements
-const productList = document.getElementById('product-list');
-const cartItems = document.getElementById('cart-items');
-const emptyCartMessage = document.getElementById('empty-cart-message');
-const cartCount = document.getElementById('cart-count');
-const subtotalAmount = document.getElementById('subtotal-amount');
-const taxAmount = document.getElementById('tax-amount');
-const totalAmount = document.getElementById('total-amount');
-const checkoutBtn = document.getElementById('checkout-btn');
+let productList, cartItems, emptyCartMessage, cartCount;
+let subtotalAmount, taxAmount, totalAmount, checkoutBtn;
 
-// Calculator elements
-const originalPriceInput = document.getElementById('original-price');
-const discountPercentageInput = document.getElementById('discount-percentage');
-const calculateBtn = document.getElementById('calculate-btn');
-const finalPrice = document.getElementById('final-price');
-const savingsAmount = document.getElementById('savings-amount');
+// Initialize DOM elements
+function initDOMElements() {
+    productList = document.getElementById('product-list');
+    cartItems = document.getElementById('cart-items');
+    emptyCartMessage = document.getElementById('empty-cart-message');
+    cartCount = document.getElementById('cart-count');
+    subtotalAmount = document.getElementById('subtotal-amount');
+    taxAmount = document.getElementById('tax-amount');
+    totalAmount = document.getElementById('total-amount');
+    checkoutBtn = document.getElementById('checkout-btn');
+}
 
 // Initialize the application
 function init() {
+    initDOMElements();
     displayProducts();
     setupEventListeners();
 }
 
 // Display products on the page
 function displayProducts() {
+    if (!productList) return;
+    
     productList.innerHTML = '';
     
     products.forEach(product => {
@@ -47,32 +49,33 @@ function displayProducts() {
 // Set up event listeners
 function setupEventListeners() {
     // Add to cart buttons
-    productList.addEventListener('click', function(e) {
-        if (e.target.classList.contains('add-to-cart')) {
-            const productId = parseInt(e.target.getAttribute('data-id'));
-            addToCart(productId);
-        }
-    });
+    if (productList) {
+        productList.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-to-cart')) {
+                const productId = parseInt(e.target.getAttribute('data-id'));
+                addToCart(productId);
+            }
+        });
+    }
     
     // Cart quantity buttons and remove buttons
-    cartItems.addEventListener('click', function(e) {
-        if (e.target.classList.contains('quantity-btn')) {
-            const productId = parseInt(e.target.closest('.cart-item').getAttribute('data-id'));
-            if (e.target.textContent === '+') {
-                updateCartItemQuantity(productId, 1);
-            } else if (e.target.textContent === '-') {
-                updateCartItemQuantity(productId, -1);
+    if (cartItems) {
+        cartItems.addEventListener('click', function(e) {
+            if (e.target.classList.contains('quantity-btn')) {
+                const productId = parseInt(e.target.closest('.cart-item').getAttribute('data-id'));
+                if (e.target.textContent === '+') {
+                    updateCartItemQuantity(productId, 1);
+                } else if (e.target.textContent === '-') {
+                    updateCartItemQuantity(productId, -1);
+                }
             }
-        }
-        
-        if (e.target.classList.contains('remove-item')) {
-            const productId = parseInt(e.target.closest('.cart-item').getAttribute('data-id'));
-            removeFromCart(productId);
-        }
-    });
-    
-    // Discount calculator
-    calculateBtn.addEventListener('click', calculateDiscount);
+            
+            if (e.target.classList.contains('remove-item')) {
+                const productId = parseInt(e.target.closest('.cart-item').getAttribute('data-id'));
+                removeFromCart(productId);
+            }
+        });
+    }
 }
 
 // Add a product to the cart
@@ -122,24 +125,30 @@ function removeFromCart(productId) {
 function updateCart() {
     // Update cart count
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-    cartCount.textContent = totalItems;
+    if (cartCount) cartCount.textContent = totalItems;
     
     // Show/hide empty cart message
     if (cart.length === 0) {
-        emptyCartMessage.style.display = 'block';
-        cartItems.querySelectorAll('.cart-item').forEach(item => item.remove());
+        if (emptyCartMessage) emptyCartMessage.style.display = 'block';
+        if (cartItems) {
+            const items = cartItems.querySelectorAll('.cart-item');
+            if (items) items.forEach(item => item.remove());
+        }
     } else {
-        emptyCartMessage.style.display = 'none';
+        if (emptyCartMessage) emptyCartMessage.style.display = 'none';
         displayCartItems();
     }
     
     updateCartTotals();
     
-    checkoutBtn.disabled = cart.length === 0;
+    if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
 }
 
 function displayCartItems() {
-    cartItems.querySelectorAll('.cart-item').forEach(item => item.remove());
+    if (!cartItems) return;
+    
+    const items = cartItems.querySelectorAll('.cart-item');
+    if (items) items.forEach(item => item.remove());
     
     cart.forEach(item => {
         const cartItemElement = document.createElement('div');
@@ -166,29 +175,36 @@ function displayCartItems() {
     });
 }
 
+// app.js - Fixed updateCartTotals function
 function updateCartTotals() {
-    // TODO: Challenge #2 - Calculate cart totals
-    // This function should calculate subtotal, tax, and total
-    // Update the following elements:
-    // - subtotalAmount.textContent
-    // - taxAmount.textContent
-    // - totalAmount.textContent
+    // Get references to display elements
+    const subtotalAmount = document.getElementById('subtotal-amount');
+    const taxAmount = document.getElementById('tax-amount');
+    const totalAmount = document.getElementById('total-amount');
     
-    // Challenge #2 Solution:
-    // Calculate the subtotal by summing up (item price * item quantity) for all items
-    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    // Calculate totals from cart items
+    let subtotal = 0;
     
-    // Calculate tax based on the subtotal and the TAX_RATE (10%)
-    const tax = subtotal * TAX_RATE;
+    // Get all cart items
+    const cartItems = document.querySelectorAll('.cart-item');
     
-    // Calculate total by adding subtotal and tax
+    // Sum up the price of all items
+    cartItems.forEach(item => {
+        const price = parseFloat(item.querySelector('.item-price').textContent.replace('$', ''));
+        const quantity = parseInt(item.querySelector('.item-quantity').value);
+        subtotal += price * quantity;
+    });
+    
+    // Calculate tax and total
+    const taxRate = 0.10;  // 10% tax rate
+    const tax = subtotal * taxRate;
     const total = subtotal + tax;
     
-    // Update the display elements with formatted currency values
-    subtotalAmount.textContent = `$${subtotal.toFixed(2)}`;
-    taxAmount.textContent = `$${tax.toFixed(2)}`;
-    totalAmount.textContent = `$${total.toFixed(2)}`;
+    // Update the display elements with formatted currency values - Adding null checks
+    if (subtotalAmount) subtotalAmount.textContent = `$${subtotal.toFixed(2)}`;
+    if (taxAmount) taxAmount.textContent = `$${tax.toFixed(2)}`;
+    if (totalAmount) totalAmount.textContent = `$${total.toFixed(2)}`;
+    
+    // Return values for testing purposes
+    return { subtotal, tax, total };
 }
-
-// Initialize the app when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', init);
