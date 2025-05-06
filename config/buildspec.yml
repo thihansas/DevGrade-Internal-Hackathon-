@@ -3,13 +3,33 @@ version: 0.2
 phases:
   install:
     runtime-versions:
+      java: corretto17
       nodejs: 18
     commands:
+      - echo Installing Project dependencies
+      - npm install --silent
+      - echo Finished Installing Project dependencies
+
+  pre_build:
+    commands:
+      - echo Testing Project
+      - echo $CODE_COMMIT_REPO
+      - cd config
       - npm install
+      - cd ..
+      - sleep 10
+      - npm test || echo $CODE_COMMIT_REPO > ./config/repo.txt
+      - sleep 5
+      - cd config
+      - node result.js
+      - cd ..
+      - echo Finished Testing Project
+      - sleep 5
   build:
     commands:
-      - npm test -- --reporters=default --reporters=jest-junit
+      - echo Building Project
+      - echo Finished Building
 
-artifacts:
-  files:
-    - test-result.xml
+cache:
+  paths:
+    - "node_modules/**/*"

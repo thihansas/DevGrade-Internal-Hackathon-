@@ -1,77 +1,100 @@
-// // This file handles displaying the results of the challenges
+import { request } from "https";
+const REPO_FILE = "./repo.txt";
+import xml2js from "xml2js";
+const UNIT_TEST_RESULT_PATH = "../test-results.xml";
+import fs from "fs";
+import { scores } from "./scores.js";
 
-// // DOM Elements
-// const resultModal = document.getElementById('result-modal');
-// const scoreDisplay = document.getElementById('score-display');
-// const challengeResults = document.getElementById('challenge-results');
-// const closeBtn = document.querySelector('.close-btn');
+const getXMLData = () => {
+  return fs.readFileSync(UNIT_TEST_RESULT_PATH, "utf8");
+};
 
-// // Check score when checkout button is clicked
-// checkoutBtn.addEventListener('click', showResults);
+const testResultsToJson = (xmlData) => {
+  const parser = new xml2js.Parser();
+  return parser.parseStringPromise(xmlData);
+};
 
-// // Close modal when close button is clicked
-// closeBtn.addEventListener('click', () => {
-//     resultModal.style.display = 'none';
-// });
+const getJsonTestResults = async () => {
+  const xmlData = getXMLData();
+  return testResultsToJson(xmlData);
+};
 
-// // Close modal when clicking outside the modal content
-// window.addEventListener('click', (e) => {
-//     if (e.target === resultModal) {
-//         resultModal.style.display = 'none';
-//     }
-// });
+const postData = async () => {
+  const repoName = process.env.CODE_COMMIT_REPO;
+  const unitTest = await getJsonTestResults();
+  console.log("unitTest.testsuites.$=====>",unitTest.testsuites);
+  const { tests, failures } = unitTest.testsuites.$;
 
-// // Show results modal with challenge completion status
-// function showResults() {
-//     // Calculate score
-//     const score = calculateScore();
-    
-//     // Update score display
-//     scoreDisplay.textContent = `${score.scorePercentage}% (${score.completedCount}/${score.totalChallenges})`;
-    
-//     // Update challenge results
-//     displayChallengeResults(score.challenges);
-    
-//     // Show modal
-//     resultModal.style.display = 'block';
-// }
+  const summary = {
+    date: new Date(),
+    tests: tests - 3,
+    failures,
+  };
 
-// // Display challenge completion status
-// function displayChallengeResults(challenges) {
-//     challengeResults.innerHTML = '';
-    
-//     challenges.forEach(challenge => {
-//         const challengeItem = document.createElement('div');
-//         challengeItem.className = `challenge-item ${challenge.completed ? 'challenge-passed' : 'challenge-failed'}`;
-        
-//         challengeItem.innerHTML = `
-//             <h3>Challenge ${challenge.id}: ${challenge.name}</h3>
-//             <p>${challenge.description}</p>
-//             <p class="status"><strong>Status:</strong> ${challenge.completed ? 'Completed' : 'Not Completed'}</p>
-//         `;
-        
-//         challengeResults.appendChild(challengeItem);
-//     });
-// }
+  let result;
+  let currentTestCase;
+  let scoreData;
+  const testResults = unitTest.testsuites.testsuite;
+  const bugFixing = [];
+  const featureImplementation = [];
 
-// // Add keyboard shortcut to show results (Ctrl+Alt+R)
-// document.addEventListener('keydown', (e) => {
-//     if (e.ctrlKey && e.altKey && e.key === 'r') {
-//         e.preventDefault();
-//         showResults();
-//     }
-// });
+  for (result in testResults) {
+    currentTestCase = testResults[result].testcase;
 
-// // You can also check your progress at any time by opening the developer console and typing:
-// // showResults();
+    for (let testcaseIndex in currentTestCase) {
+      const index = currentTestCase[testcaseIndex].$.name.indexOf("Challenge");
+      let name;
+      if(index !== -1){
+        name = currentTestCase[testcaseIndex].$.name.slice(index);
+      }
+      scoreData = scores.bugs.find((score) => {
+        return currentTestCase[testcaseIndex].$.name === score.desc;
+      });
+      if (scoreData === undefined) {
+        scoreData = scores.features.find((score) => {
+          return currentTestCase[testcaseIndex].$.name === score.desc;
+        });
+        if (scoreData !== undefined) {
+          featureImplementation.push({
+            name: name,
+            success: currentTestCase[testcaseIndex].failure ? false : true,
+            score: scoreData.score,
+          });
+        }
+      } else {
+        bugFixing.push({
+          name: name,
+          success: currentTestCase[testcaseIndex].failure ? false : true,
+          score: scoreData.score,
+        });
+      }
+    }
+  }
+  const params = {
+    repoName,
+    summary,
+    bugFixing,
+    featureImplementation,
+  };
+  return params;
+};
 
-document.addEventListener('DOMContentLoaded', () => {
-    const score = calculateScore();
-    document.getElementById('score-display').textContent = `${score}/2`;
-    
-    const results = document.getElementById('challenge-results');
-    results.innerHTML = `
-        <p>Challenge 1: ${document.title === 'ShopMaster2025' ? '✅' : '❌'}</p>
-        <p>Challenge 2: ${document.getElementById('total-amount').textContent !== '$0.00' ? '✅' : '❌'}</p>
-    `;
-});
+const sendReportData = async () => {
+  const data = await postData();
+  //console.log(data);
+  const options = {
+    hostname: "dev.devgrade.io",
+    path: "/assessments/report",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": Buffer.byteLength(JSON.stringify(data)),
+    },
+  };
+
+  const req = request(options, (res) => {});
+  req.write(JSON.stringify(data));
+  req.end();
+};
+
+sendReportData();
