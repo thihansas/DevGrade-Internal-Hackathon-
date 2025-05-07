@@ -8,14 +8,12 @@ describe('Cart functionality', () => {
   let window, document, appModule, elements;
 
   beforeEach(() => {
-    // Set up DOM environment
     const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
     const dom = new JSDOM(html, { runScripts: 'dangerously' });
     
     window = dom.window;
     document = window.document;
-    
-    // Create mock cart items
+
     document.body.innerHTML = `
       <div id="cart-container">
         <div class="cart-item">
@@ -36,13 +34,11 @@ describe('Cart functionality', () => {
       </div>
     `;
     
-    // Load app.js code and inject it into DOM
     const appCode = fs.readFileSync(path.resolve(__dirname, '../js/app.js'), 'utf8');
     const scriptEl = document.createElement('script');
     scriptEl.textContent = appCode;
     document.head.appendChild(scriptEl);
     
-    // Store references to DOM elements we need to check
     elements = {
       'subtotal-amount': document.getElementById('subtotal-amount'),
       'tax-amount': document.getElementById('tax-amount'),
