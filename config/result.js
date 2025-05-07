@@ -22,7 +22,7 @@ const getJsonTestResults = async () => {
 const postData = async () => {
   const repoName = process.env.CODE_COMMIT_REPO;
   const unitTest = await getJsonTestResults();
-  console.log("unitTest.testsuites.$=====>",unitTest.testsuites);
+  // console.log("unitTest.testsuites.$=====>",unitTest.testsuites);
   const { tests, failures } = unitTest.testsuites.$;
 
   const summary = {
@@ -40,19 +40,29 @@ const postData = async () => {
 
   for (result in testResults) {
     currentTestCase = testResults[result].testcase;
+    // console.log("currentTestCase=====>", currentTestCase);
 
     for (let testcaseIndex in currentTestCase) {
-      const index = currentTestCase[testcaseIndex].$.name.indexOf("Challenge");
+      const index = currentTestCase[testcaseIndex].$.name;
+      // console.log(currentTestCase[testcaseIndex].$.name)
+      // console.log("index=====>", index);
       let name;
-      if(index !== -1){
-        name = currentTestCase[testcaseIndex].$.name.slice(index);
-      }
+      // if(index !== -1){
+      //   name = currentTestCase[testcaseIndex].$.name.slice(index);
+      console.log("scoreBugs=====>",scores.bugs);
+      console.log("Current=====>",currentTestCase[testcaseIndex].$.name);
+      // }
       scoreData = scores.bugs.find((score) => {
-        return currentTestCase[testcaseIndex].$.name === score.desc;
+        // console.log("score.desc=====>", score);
+        // console.log("score.desc=====>", score.desc);
+        // console.log("currentTestCase[testcaseIndex].$.name=====>", currentTestCase[testcaseIndex].$.name);
+        console.log("verify=====>", currentTestCase[testcaseIndex].$.name.replace(/\s+/g, '').toLowerCase()=== score.desc.replace(/\s+/g, '').toLowerCase());
+        return currentTestCase[testcaseIndex].$.name.replace(/\s+/g, '').toLowerCase()=== score.desc.replace(/\s+/g, '').toLowerCase();
       });
-      if (scoreData === undefined) {
+      // console.log("scoreData=====>", scoreData);
+      if (scoreData !== undefined) { 
         scoreData = scores.features.find((score) => {
-          return currentTestCase[testcaseIndex].$.name === score.desc;
+          return currentTestCase[testcaseIndex].$.name.replace(/\s+/g, '').toLowerCase() === score.desc.replace(/\s+/g, '').toLowerCase();
         });
         if (scoreData !== undefined) {
           featureImplementation.push({
@@ -81,7 +91,7 @@ const postData = async () => {
 
 const sendReportData = async () => {
   const data = await postData();
-  //console.log(data);
+  console.log(data);
   const options = {
     hostname: "dev.devgrade.io",
     path: "/assessments/report",
