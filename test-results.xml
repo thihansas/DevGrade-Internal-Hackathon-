@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="4" failures="0" errors="0" time="15.521">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-05-07T03:36:19" time="1.885" tests="1">
-    <testcase classname=" Page title should be ShopMaster2025" name=" Page title should be ShopMaster2025" time="0.024">
+<testsuites name="jest tests" tests="4" failures="0" errors="0" time="37.552">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-05-07T04:53:40" time="3.128" tests="1">
+    <testcase classname=" Page title should be ShopMaster2025" name=" Page title should be ShopMaster2025" time="0.078">
     </testcase>
   </testsuite>
-  <testsuite name="E-commerce - Product Display Functionality" errors="0" failures="0" skipped="0" timestamp="2025-05-07T03:36:22" time="2.227" tests="2">
-    <testcase classname="E-commerce - Product Display Functionality Products load and display correctly" name="E-commerce - Product Display Functionality Products load and display correctly" time="0.074">
+  <testsuite name="E-commerce - Product Display Functionality" errors="0" failures="0" skipped="0" timestamp="2025-05-07T04:53:44" time="2.732" tests="2">
+    <testcase classname="E-commerce - Product Display Functionality Products load and display correctly" name="E-commerce - Product Display Functionality Products load and display correctly" time="0.091">
     </testcase>
-    <testcase classname="E-commerce - Product Display Functionality Product list should be empty when no products exist" name="E-commerce - Product Display Functionality Product list should be empty when no products exist" time="0.002">
+    <testcase classname="E-commerce - Product Display Functionality Product list should be empty when no products exist" name="E-commerce - Product Display Functionality Product list should be empty when no products exist" time="0.005">
     </testcase>
   </testsuite>
-  <testsuite name="Cart functionality" errors="0" failures="0" skipped="0" timestamp="2025-05-07T03:36:19" time="6.332" tests="1">
-    <testcase classname="Cart functionality Cart totals should be calculated correctly" name="Cart functionality Cart totals should be calculated correctly" time="0.205">
+  <testsuite name="Cart functionality" errors="0" failures="0" skipped="0" timestamp="2025-05-07T04:53:40" time="7.332" tests="1">
+    <testcase classname="Cart functionality Cart totals should be calculated correctly" name="Cart functionality Cart totals should be calculated correctly" time="0.343">
     </testcase>
   </testsuite>
 </testsuites>
