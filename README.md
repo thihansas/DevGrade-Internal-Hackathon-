@@ -1,99 +1,69 @@
-ShopMaster E-commerce Challenge
-This is a half-built e-commerce web application with 5 challenges for you to complete. The project includes HTML, CSS, and JavaScript files for the client-side, as well as a simple Express server for the backend.
 
-Getting Started
-Install Node.js if you haven't already (https://nodejs.org)
-Install the dependencies for the server:
+# 🛒 ShopMaster E-commerce Challenge
+
+Welcome to the **ShopMaster E-commerce Challenge**!  
+This is a half-built e-commerce web application containing **5 hands-on challenges** that test your front-end and back-end web development skills.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install Node.js  
+Download from: [https://nodejs.org](https://nodejs.org)
+
+### 2. Install server dependencies
+
 cd server
 npm install
-Start the server:
+
+
+### 3. Start the server
+
 npm start
-Open your browser and navigate to http://localhost:3000
-The Challenges
-You need to complete 5 challenges in this project. Each challenge tests a different aspect of web development. After completing the challenges, you can check your score by clicking the "Checkout" button or pressing Ctrl+Alt+R.
 
-Challenge 1: Site Title Customization
-Objective: Change the site title and tagline to make the site your own.
 
-Steps:
+### 4. Open the application
 
-Open index.html
-Find the site title with the ID site-title
-Change the text content to a different title
-Success Criteria: The site title is different from the default "ShopMaster"
+Visit: [http://localhost:3000](http://localhost:3000)
 
-Challenge 2: Cart Totals Calculation
-Objective: Implement the cart totals calculation function.
+---
 
-Steps:
+## 🧩 The Challenges
 
-Open js/app.js
-Find the updateCartTotals() function
-Implement the function to:
-Calculate the subtotal (sum of price * quantity for all items)
-Calculate the tax (subtotal * TAX_RATE)
-Calculate the total (subtotal + tax)
-Update the respective elements with the formatted values
-Success Criteria: When items are added to the cart, the subtotal, tax, and total amounts are correctly calculated and displayed.
+Each challenge focuses on a different web development concept.
+Your progress is tracked in `js/score.js`.
+Check your score anytime by clicking **"Checkout"** or pressing `Ctrl + Alt + R`.
 
-Challenge 3: Discount Calculator
-Objective: Implement the discount calculator function.
+### ✅ Challenge 1: Site Title Customization
 
-Steps:
+**Objective:** Personalize your website.
 
-Open js/app.js
-Find the calculateDiscount() function
-Implement the function to:
-Get the original price from the input field
-Get the discount percentage from the input field
-Calculate the final price after applying the discount
-Calculate the savings amount
-Update the respective elements with the formatted values
-Success Criteria: When values are entered and the Calculate button is clicked, the correct final price and savings amount are displayed.
+* Open `index.html`
+* Find the site title with the ID `site-title`
+* Change the text to a unique site name
 
-Challenge 4: Product Filtering
-Objective: Implement a product filtering function.
+**✔️ Success Criteria:**
+The site title is changed from the default **"ShopMaster"**
 
-Steps:
+---
 
-Add a search input or filter controls to the products section in index.html
-Create a function in js/app.js to filter products based on user input
-Update the product display to show only filtered products
-Success Criteria: Users can filter/search products, and the product list updates accordingly.
+### ✅ Challenge 2: Cart Totals Calculation
 
-Challenge 5: Local Storage Integration
-Objective: Save and load the cart from localStorage.
+**Objective:** Implement cart total calculations.
 
-Steps:
+* Open `js/app.js`
+* Complete the `updateCartTotals()` function:
 
-Modify the updateCart() function in js/app.js to save the cart to localStorage
-Create functions to:
-Save the cart to localStorage whenever it changes
-Load the cart from localStorage when the page loads
-Update the init() function to load the cart on page load
-Success Criteria: When items are added to the cart, they persist even after page refresh.
+  * Calculate subtotal = `price × quantity` for each item
+  * Calculate tax = `subtotal × TAX_RATE`
+  * Calculate total = `subtotal + tax`
+  * Update the relevant elements in the UI
 
-Scoring
-Your progress is tracked in js/score.js. Each completed challenge contributes to your overall score. You can check your score at any time by clicking the "Checkout" button or pressing Ctrl+Alt+R.
+**✔️ Success Criteria:**
+Correct subtotal, tax, and total values are shown when items are added to the cart.
 
-API Endpoints
-The server provides the following API endpoints:
 
-GET /api/products - Get all products
-GET /api/products/:id - Get a single product by ID
-POST /api/checkout - Process a checkout (requires items and customer info)
-POST /api/discount - Apply a discount code
-Sample Discount Codes
-WELCOME10 - 10% discount
-SPRING25 - 25% discount
-FREESHIP - 5% discount (free shipping)
-Need Help?
-If you get stuck, here are some tips:
+## 🏁 Good Luck & Have Fun!
 
-Check the browser console for errors
-Review the specific requirements for each challenge
-Look at the tests in js/score.js to understand what's being checked
-Use console.log() to debug your code
-Good luck with the challenges!
+> "Code, test, and conquer!"
 
-"# DevGrade-Internal-Hackathon-" 
